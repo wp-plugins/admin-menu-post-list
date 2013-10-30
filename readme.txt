@@ -20,7 +20,7 @@ In the normal admin menu, when you're editing a post and wish to go to another o
 * Install and activate the plugin
 * Go to *Settings->Post List* and select post types to enable
 
-A post list will be added to the bottom of each corresponding post type's menu. You can see it by hovering over the menu item, or when the item is open. Draft/pending posts are shown in *italics*, and child pages are listed under the parent.
+A post list will be added to the bottom of each corresponding post type's menu. You can see it by hovering over the menu item, or when the item is open. The current post is shown in **bold**, draft/pending posts are in *italics*, and child pages are listed under the parent.
 
 == Feature plan ==  
 <br>
