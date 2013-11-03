@@ -6,7 +6,7 @@ Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.0.1
 Tested up to: 3.7.1
-Stable tag: 0.5
+Stable tag: 0.6
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -21,6 +21,8 @@ In the normal admin menu, when you're editing a post and wish to go to another o
 * Go to *Settings->Post List* and select post types to enable
 
 A post list will be added to the bottom of each corresponding post type's menu. You can see it by hovering over the menu item, or when the item is open. The current post is shown in **bold**, draft/pending posts are in *italics*, and child pages are listed under the parent.
+
+There is an option to limit the number of items to show for each post type, for example, the five most recent posts.
 
 == Feature plan ==  
 <br>
@@ -43,6 +45,10 @@ Not yet.
 None.
 
 == Changelog ==
+
+= 0.6 =
+
+* Added an option to limit the number of posts to list
 
 = 0.5 =
 

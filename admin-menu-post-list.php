@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 0.5
+Version: 0.6
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -80,6 +80,10 @@ function build_post_list_item($post_id,$post_type,$is_child) {
 add_action('admin_menu', 'custom_post_list_view', 11);
 function custom_post_list_view() {
 
+	/** Get settings **/
+
+	$settings = get_option( 'ampl_settings' );
+
 	/*** Get all post types ***/
 
 	$post_types = get_post_types();
@@ -88,7 +92,9 @@ function custom_post_list_view() {
 
 	/*** If enabled in settings ***/
 
-	if(ampl_enabled($post_type)) {
+	if($settings['post_types'][$post_type] == 'on' ) {
+
+		$max_limit = $settings['max_limit'][$post_type];
 
 		$custom_menu_slug = $post_type;
 		$output = '';
@@ -113,8 +119,12 @@ function custom_post_list_view() {
 			$output .= '<div class="post_list_view">'
 						. '<div class="post_list_view_headline">' . '<hr>' . '</div>';
 
+			$count=0;
 			foreach ($posts as $post) {
-				$output .= build_post_list_item($post->ID,$post_type,'parent');
+				if(($max_limit==0) ||
+					($count<$max_limit))
+						$output .= build_post_list_item($post->ID,$post_type,'parent');
+				$count++;
 			}
 
 			$output .= '</div>';
@@ -181,43 +191,64 @@ add_action( 'admin_init', 'ampl_register_settings' );
 function ampl_register_settings() {
 	register_setting( 'ampl_settings_field', 'ampl_settings', 'ampl_settings_field_validate' );
 	add_settings_section('ampl_settings_section', '', 'ampl_settings_section_page', 'ampl_settings_section_page_name');
-	add_settings_field('ampl_settings_field_string', 'Select post type to enable', 'ampl_settings_field_input', 'ampl_settings_section_page_name', 'ampl_settings_section');
+	add_settings_field('ampl_settings_field_string', '<b>Select post types to enable</b>', 'ampl_settings_field_input', 'ampl_settings_section_page_name', 'ampl_settings_section');
 }
 
 function ampl_settings_section_page() {
-/*	echo '<p>Main description</p>'; */
+/*	echo '<p>Main description</p>';  */
 }
 
 function ampl_settings_field_input() {
 //	$options = get_option('ampl_settings');
 //	echo "<input id='ampl_settings_field_string' name='ampl_settings[page]' type='checkbox' value='{$options['text_string']}' />";
 
-	$settings = (array) get_option( 'ampl_settings', $defaults );
+	$settings = get_option( 'ampl_settings');
 
-	 foreach ( custom_gallery_get_post_types() as $key => $label ) {
-		$post_types = isset( $settings['post_types'][ $key ] ) ? esc_attr( $settings['post_types'][ $key ] ) : '';
+	?>
+	<tr>
+	<td><b>Post type</b></td>
+	<td><b>Number of items</b> (0=unlimited)
+	</td>
+	</tr>
+	<?php
 
-		?><p>
-			<input type="checkbox" id="<?php echo $key; ?>" name="ampl_settings[post_types][<?php echo $key; ?>]" <?php checked( $post_types, 'on' ); ?>/><label for="<?php echo $key; ?>"> <?php echo $label; ?></label>
-		</p><?php
-	} 
+	$all_post_types = get_post_types(array('public'=>true));
+	$exclude_types = array('attachment');
+
+	 foreach ($all_post_types as $key) {
+
+	 	if(!in_array($key, $exclude_types)) {
+
+			$post_types = isset( $settings['post_types'][ $key ] ) ? esc_attr( $settings['post_types'][ $key ] ) : '';
+		 	if(isset( $settings['max_limit'][ $key ] ) ) {
+			 	$max_number =  $settings['max_limit'][ $key ];
+			 } else {
+			 	$max_number =  '0';
+			 }
+
+	/*	<input type="checkbox" id="<?php echo $key; ?>" name="ampl_settings[post_types][<?php echo $key; ?>]" <?php checked( $post_types, 'on' ); ?>/><label for="<?php echo $key; ?>"> <?php echo $label; ?></label>
+	*/
+			?>
+			<tr>
+				<td width="200px">
+					<input type="checkbox" id="<?php echo $key; ?>" name="ampl_settings[post_types][<?php echo $key; ?>]" <?php checked( $post_types, 'on' ); ?>/>
+					<?php echo '&nbsp;' . ucwords($key); ?>
+				</td>
+				<td width="400px">
+					<input type="text" size="1"
+						id="ampl_settings_field_max_limit"
+						name="ampl_settings[max_limit][<?php echo $key; ?>]"
+						value="<?php echo $max_number; ?>" />
+				</td>
+			</tr>
+			<?php
+		}
+	}
 }
 
 function ampl_settings_field_validate($input) {
-	// Validate somehow?
+	// Validate somehow
 	return $input;
-}
-
-function ampl_enabled( $post_type ) {
-
-	// get the allowed post type from the DB
-	$enabled_post_types = ( array ) get_option( 'ampl_settings', $defaults );
-
-	// check the two against each other
-	if ( $enabled_post_types['post_types'][$post_type] == 'on' )
-		return true;
-	else
-		return false;
 }
 
 function ampl_get_post_types() {
