@@ -18,7 +18,7 @@ Admin Menu Post List adds a simple post list in the admin menu for easy access. 
 In the normal admin menu, when you're editing a post and wish to go to another one, you have to click on All Posts, then select a post -- or have All Posts open on another browser tab. With the Admin Menu Post List, you can just select the next post to edit, direct from the menu.
 
 * Install and activate the plugin
-* Go to *Settings->Post List* and select post types to enable
+* Go to *Settings->Post List*, enable post types and options
 
 A post list will be added to the bottom of each corresponding post type's menu. You can see it by hovering over the menu item, or when the item is open. The current post is shown in **bold**, draft/pending posts are in *italics*, and child pages are listed under the parent.
 
