@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 0.6
+Version: 0.7
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -22,6 +22,13 @@ function build_post_list_item($post_id,$post_type,$is_child) {
 	$edit_link = get_edit_post_link($post_id);
 	$title = get_the_title($post_id);
 	$title = esc_html($title);
+
+ /* Limit title length */
+
+	if(strlen($title)>20) {
+		$title = substr($title, 0, 20) . '..';
+	}
+
 	$output = '<div class="';
 
 	if($is_child != 'child') { $output .= 'post_list_view_indent'; }
@@ -94,7 +101,16 @@ function custom_post_list_view() {
 
 	if($settings['post_types'][$post_type] == 'on' ) {
 
+		/* Get display options */
+
 		$max_limit = $settings['max_limit'][$post_type];
+		if($max_limit=='') $max_limit = 0;
+
+		$post_orderby = $settings['orderby'][$post_type];
+		if($post_orderby=='') $post_orderby = 'date';
+
+		$post_order = $settings['order'][$post_type];
+		if($post_order=='') $post_order = 'ASC';
 
 		$custom_menu_slug = $post_type;
 		$output = '';
@@ -104,8 +120,8 @@ function custom_post_list_view() {
 			"parent" => "0",
 			"post_parent" => "0",
 			"numberposts" => "-1",
-			"orderby" => "menu_order",
-			"order" => "ASC",
+			"orderby" => $post_orderby,
+			"order" => $post_order,
 			"post_status" => "any",
 			"suppress_filters" => 0
 		);
@@ -206,9 +222,10 @@ function ampl_settings_field_input() {
 
 	?>
 	<tr>
-	<td><b>Post type</b></td>
-	<td><b>Number of items</b> (0=unlimited)
-	</td>
+		<td><b>Post type</b></td>
+		<td><b>Max items</b> (0=all)</td>
+		<td><b>Order by</b></td>
+		<td><b>Order</b></td>
 	</tr>
 	<?php
 
@@ -225,20 +242,42 @@ function ampl_settings_field_input() {
 			 } else {
 			 	$max_number =  '0';
 			 }
+		 	if(isset( $settings['orderby'][ $key ] ) ) {
+			 	$post_orderby =  $settings['orderby'][ $key ];
+			 } else {
+			 	$post_orderby =  'date';
+			 }
+		 	if(isset( $settings['order'][ $key ] ) ) {
+			 	$post_order =  $settings['order'][ $key ];
+			 } else {
+			 	$post_order =  'DESC';
+			 }
 
-	/*	<input type="checkbox" id="<?php echo $key; ?>" name="ampl_settings[post_types][<?php echo $key; ?>]" <?php checked( $post_types, 'on' ); ?>/><label for="<?php echo $key; ?>"> <?php echo $label; ?></label>
-	*/
 			?>
 			<tr>
 				<td width="200px">
 					<input type="checkbox" id="<?php echo $key; ?>" name="ampl_settings[post_types][<?php echo $key; ?>]" <?php checked( $post_types, 'on' ); ?>/>
 					<?php echo '&nbsp;' . ucwords($key); ?>
 				</td>
-				<td width="400px">
+				<td width="200px">
 					<input type="text" size="1"
 						id="ampl_settings_field_max_limit"
 						name="ampl_settings[max_limit][<?php echo $key; ?>]"
 						value="<?php echo $max_number; ?>" />
+				</td>
+				<td width="200px">
+					<input type="radio" value="date" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'date', $post_orderby ); ?>/>
+					<?php echo 'date&nbsp;&nbsp;'; ?>
+					<input type="radio" value="title" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'title', $post_orderby ); ?>/>
+					<?php echo 'title&nbsp;&nbsp;'; ?>
+					<input type="radio" value="menu_order" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'menu_order', $post_orderby ); ?>/>
+					<?php echo 'menu&nbsp;&nbsp;'; ?>
+				</td>
+				<td width="200px">
+					<input type="radio" value="ASC" name="ampl_settings[order][<?php echo $key; ?>]" <?php checked( 'ASC', $post_order ); ?>/>
+					<?php echo 'ASC&nbsp;&nbsp;'; ?>
+					<input type="radio" value="DESC" name="ampl_settings[order][<?php echo $key; ?>]" <?php checked( 'DESC', $post_order ); ?>/>
+					<?php echo 'DESC&nbsp;'; ?>
 				</td>
 			</tr>
 			<?php
