@@ -39,6 +39,10 @@ And the direction of the order:
 
 By default, they are set to display from most recent to older posts.
 
+= Note =  
+<br />
+There is a plugin called [Intuitive Custom Post Order](http://wordpress.org/plugins/intuitive-custom-post-order/), which lets you order posts by drag and drop. If it's installed, it overrides the post order settings in the admin menu also.
+
 == Feature plan ==  
 <br>
 
