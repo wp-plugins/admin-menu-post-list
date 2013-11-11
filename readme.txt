@@ -24,11 +24,13 @@ A post list will be added to the bottom of each corresponding post type's menu. 
 
 = Options =  
 <br />
-You can limit the number of items to display, for example, the five most recent posts. You can also order the post list by:
+For each post type, you can limit the number of items to display: for example, the five most recent posts.
+
+You can also choose to order the post list by:
 
 * *date* - order by date
 * *title* - order by title
-* *menu* - order by page order - "Used most often for Pages (Order field in the Edit Page Attributes box) and for Attachments (the integer fields in the Insert / Upload Media Gallery dialog), but could be used for any post type with distinct 'menu_order' values"
+* *menu* - order by page order - used most often for pages (Order field under Edit Page Attributes) but could be used for any post type with *menu_order* values
 
 And the direction of the order:
 
