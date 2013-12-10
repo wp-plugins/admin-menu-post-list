@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 0.7
+Version: 0.8
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -112,6 +112,14 @@ function custom_post_list_view() {
 		$post_order = $settings['order'][$post_type];
 		if($post_order=='') $post_order = 'ASC';
 
+		$post_exclude = $settings['exclude_status'][$post_type];
+		if($post_exclude=='') $post_exclude = 'off';
+		if($post_exclude=='on') {
+			$post_exclude = 'publish';
+		} else {
+			$post_exclude = 'any';
+		}
+
 		$custom_menu_slug = $post_type;
 		$output = '';
 
@@ -122,7 +130,7 @@ function custom_post_list_view() {
 			"numberposts" => "-1",
 			"orderby" => $post_orderby,
 			"order" => $post_order,
-			"post_status" => "any",
+			"post_status" => $post_exclude,
 			"suppress_filters" => 0
 		);
 
@@ -226,6 +234,7 @@ function ampl_settings_field_input() {
 		<td><b>Max items</b> (0=all)</td>
 		<td><b>Order by</b></td>
 		<td><b>Order</b></td>
+		<td><b>Show only published</b></td>
 	</tr>
 	<?php
 
@@ -237,6 +246,10 @@ function ampl_settings_field_input() {
 	 	if(!in_array($key, $exclude_types)) {
 
 			$post_types = isset( $settings['post_types'][ $key ] ) ? esc_attr( $settings['post_types'][ $key ] ) : '';
+
+			$post_type_object = get_post_type_object( $key );
+			$post_type_label = $post_type_object->labels->name;
+
 		 	if(isset( $settings['max_limit'][ $key ] ) ) {
 			 	$max_number =  $settings['max_limit'][ $key ];
 			 } else {
@@ -252,12 +265,17 @@ function ampl_settings_field_input() {
 			 } else {
 			 	$post_order =  'DESC';
 			 }
+		 	if(isset( $settings['exclude_status'][ $key ] ) ) {
+			 	$post_exclude = $settings['exclude_status'][ $key ];
+			 } else {
+			 	$post_exclude =  'off';
+			 }
 
 			?>
 			<tr>
 				<td width="200px">
 					<input type="checkbox" id="<?php echo $key; ?>" name="ampl_settings[post_types][<?php echo $key; ?>]" <?php checked( $post_types, 'on' ); ?>/>
-					<?php echo '&nbsp;' . ucwords($key); ?>
+					<?php echo '&nbsp;' . ucwords($post_type_label); ?>
 				</td>
 				<td width="200px">
 					<input type="text" size="1"
@@ -269,15 +287,18 @@ function ampl_settings_field_input() {
 					<input type="radio" value="date" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'date', $post_orderby ); ?>/>
 					<?php echo 'date&nbsp;&nbsp;'; ?>
 					<input type="radio" value="title" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'title', $post_orderby ); ?>/>
-					<?php echo 'title&nbsp;&nbsp;'; ?>
+					<?php echo 'title&nbsp;&nbsp;'; /* ?>
 					<input type="radio" value="menu_order" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'menu_order', $post_orderby ); ?>/>
-					<?php echo 'menu&nbsp;&nbsp;'; ?>
+					<?php echo 'menu&nbsp;&nbsp;'; */ ?>
 				</td>
 				<td width="200px">
 					<input type="radio" value="ASC" name="ampl_settings[order][<?php echo $key; ?>]" <?php checked( 'ASC', $post_order ); ?>/>
 					<?php echo 'ASC&nbsp;&nbsp;'; ?>
 					<input type="radio" value="DESC" name="ampl_settings[order][<?php echo $key; ?>]" <?php checked( 'DESC', $post_order ); ?>/>
 					<?php echo 'DESC&nbsp;'; ?>
+				</td>
+				<td width="200px">
+					<input type="checkbox" name="ampl_settings[exclude_status][<?php echo $key; ?>]" <?php checked( $post_exclude, 'on' ); ?>/>
 				</td>
 			</tr>
 			<?php

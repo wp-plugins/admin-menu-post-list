@@ -6,7 +6,7 @@ Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.0.1
 Tested up to: 3.7.1
-Stable tag: 0.7
+Stable tag: 0.8
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -30,7 +30,6 @@ You can also choose to order the post list by:
 
 * *date* - order by date
 * *title* - order by title
-* *menu* - order by page order - used most often for pages (Order field under Edit Page Attributes) but could be used for any post type with *menu_order* values
 
 And the direction of the order:
 
@@ -38,6 +37,8 @@ And the direction of the order:
 * *DESC* - descending - new to old (3, 2, 1; c, b, a)
 
 By default, they are set to display from most recent to older posts.
+
+Also, you can choose to only display published posts, and exclude those with future, draft or pending status.
 
 = Note =  
 <br />
@@ -64,10 +65,14 @@ None.
 
 == Changelog ==
 
+= 0.8 =
+
+* Added option to display only published posts, and exclude those with future, draft or pending status
+
 = 0.7 =
 
 * Limit length of post title to one line
-* Added option to order post list by date/title, and ASC/DESC.
+* Added option to order post list by date/title, and ASC/DESC
 
 = 0.6 =
 
