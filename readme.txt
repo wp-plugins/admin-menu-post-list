@@ -26,7 +26,7 @@ A post list will be added to the bottom of each corresponding post type's menu. 
 <br />
 For each post type, you can limit the number of items to display: for example, the five most recent posts.
 
-You can also choose to order the post list by:
+You can choose to order the post list by:
 
 * *date* - order by date
 * *title* - order by title
