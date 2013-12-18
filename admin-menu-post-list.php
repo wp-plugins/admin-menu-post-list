@@ -3,11 +3,29 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 0.8
+Version: 0.9
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
 */
+
+
+
+/* Add settings link on plugin page */
+
+add_filter( "plugin_action_links", 'ampl_plugin_settings_link', 10, 4 );
+ 
+function ampl_plugin_settings_link( $links, $file ) {
+	$plugin_file = 'admin-menu-post-list/admin-menu-post-list.php';
+	//make sure it is our plugin we are modifying
+	if ( $file == $plugin_file ) {
+		$settings_link = '<a href="' .
+			admin_url( 'admin.php?page=admin_menu_post_list_settings_page' ) . '">' .
+			__( 'Settings', 'admin_menu_post_list_settings_page' ) . '</a>';
+		array_unshift( $links, $settings_link );
+	}
+	return $links;
+}
 
 
 /*
@@ -208,7 +226,7 @@ add_action( 'admin_head', 'custom_post_list_view_css' );
 add_action('admin_menu', 'ampl_create_menu');
 
 function ampl_create_menu() {
-	add_options_page('Post List', 'Post List', 'manage_options', 'ampl_menu_slug', 'ampl_settings_page');
+	add_options_page('Post List', 'Post List', 'manage_options', 'admin_menu_post_list_settings_page', 'ampl_settings_page');
 }
 
 add_action( 'admin_init', 'ampl_register_settings' );
@@ -231,7 +249,7 @@ function ampl_settings_field_input() {
 	?>
 	<tr>
 		<td><b>Post type</b></td>
-		<td><b>Max items</b> (0=all)</td>
+		<td><b>Max items (0=all)</b></td>
 		<td><b>Order by</b></td>
 		<td><b>Order</b></td>
 		<td><b>Show only published</b></td>
