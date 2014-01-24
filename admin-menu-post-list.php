@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 1.0
+Version: 1.1
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -207,6 +207,10 @@ function custom_post_list_view_css() { ?>
 		.post_list_view_headline {
 			padding-left: 10px !important; 
 			padding-right: 10px !important;
+			margin-top: -8px !important;
+		}
+		.post_list_view_headline hr {
+			border-color: #666 !important;
 		}
 		.post_list_view_indent {
 			margin-left:12px;

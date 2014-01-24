@@ -5,8 +5,8 @@ Author URI: eliotakira.com
 Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.0.1
-Tested up to: 3.7.1
-Stable tag: 1.0
+Tested up to: 3.8
+Stable tag: 1.1
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -65,9 +65,13 @@ None.
 
 == Changelog ==
 
+= 1.1 =
+
+* Improved color and position of separator
+
 = 1.0 =
 
-* Set a limit to number of posts (25) when max items is 0=all. When there is a huge number of posts, this will prevent the plugin from processing them all.
+* Limit number of posts to 25 when max items is 0=all. With a large number of posts, this will prevent the plugin from processing them all.
 
 = 0.9 =
 
