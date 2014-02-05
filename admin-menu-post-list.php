@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 1.1
+Version: 1.2
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -35,7 +35,11 @@ function ampl_plugin_settings_link( $links, $file ) {
 
 function build_post_list_item($post_id,$post_type,$is_child) {
 
-	$current_post_ID = $_GET['post']; /* Get current post ID on admin screen */
+
+	if( !isset($_GET['post']) )
+		$current_post_ID = -1;
+	else
+		$current_post_ID = $_GET['post']; /* Get current post ID on admin screen */
 
 	$edit_link = get_edit_post_link($post_id);
 	$title = get_the_title($post_id);
@@ -117,7 +121,12 @@ function custom_post_list_view() {
 
 	/*** If enabled in settings ***/
 
-	if($settings['post_types'][$post_type] == 'on' ) {
+	if(!isset($settings['post_types'][$post_type]))
+		$post_types_setting = 'off';
+	else 
+		$post_types_setting = $settings['post_types'][$post_type];
+
+	if($post_types_setting == 'on' ) {
 
 		/* Get display options */
 
@@ -130,7 +139,11 @@ function custom_post_list_view() {
 		$post_order = $settings['order'][$post_type];
 		if($post_order=='') $post_order = 'ASC';
 
-		$post_exclude = $settings['exclude_status'][$post_type];
+		if( !isset($settings['exclude_status']) || !isset($settings['exclude_status'][$post_type]))
+			$post_exclude = '';
+		else
+			$post_exclude = $settings['exclude_status'][$post_type];
+
 		if($post_exclude=='') $post_exclude = 'off';
 		if($post_exclude=='on') {
 			$post_exclude = 'publish';
