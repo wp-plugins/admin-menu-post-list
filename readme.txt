@@ -6,7 +6,7 @@ Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.0.1
 Tested up to: 3.8
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -64,6 +64,10 @@ Not yet.
 None.
 
 == Changelog ==
+
+= 1.3 =
+
+* Added option to sort by last modified date
 
 = 1.2 =
 

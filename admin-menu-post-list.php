@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 1.2
+Version: 1.3
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -325,17 +325,17 @@ function ampl_settings_field_input() {
 				</td>
 				<td width="200px">
 					<input type="radio" value="date" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'date', $post_orderby ); ?>/>
-					<?php echo 'date&nbsp;&nbsp;'; ?>
+					<?php echo 'created&nbsp;&nbsp;<br>'; ?>
+					<input type="radio" value="modified" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'modified', $post_orderby ); ?>/>
+					<?php echo 'modified&nbsp;&nbsp;<br>'; ?>
 					<input type="radio" value="title" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'title', $post_orderby ); ?>/>
-					<?php echo 'title&nbsp;&nbsp;'; /* ?>
-					<input type="radio" value="menu_order" name="ampl_settings[orderby][<?php echo $key; ?>]" <?php checked( 'menu_order', $post_orderby ); ?>/>
-					<?php echo 'menu&nbsp;&nbsp;'; */ ?>
+					<?php echo 'title&nbsp;&nbsp;'; ?>
 				</td>
 				<td width="200px">
 					<input type="radio" value="ASC" name="ampl_settings[order][<?php echo $key; ?>]" <?php checked( 'ASC', $post_order ); ?>/>
-					<?php echo 'ASC&nbsp;&nbsp;'; ?>
+					<?php echo 'ASC&nbsp;&nbsp;- alphabetical<br>'; ?>
 					<input type="radio" value="DESC" name="ampl_settings[order][<?php echo $key; ?>]" <?php checked( 'DESC', $post_order ); ?>/>
-					<?php echo 'DESC&nbsp;'; ?>
+					<?php echo 'DESC&nbsp; - new to old'; ?>
 				</td>
 				<td width="200px">
 					<input type="checkbox" name="ampl_settings[exclude_status][<?php echo $key; ?>]" <?php checked( $post_exclude, 'on' ); ?>/>
