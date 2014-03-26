@@ -28,7 +28,8 @@ For each post type, you can limit the number of items to display: for example, t
 
 You can choose to order the post list by:
 
-* *date* - order by date
+* *created* - order by date created
+* *modified* - order by date modified
 * *title* - order by title
 
 And the direction of the order:
