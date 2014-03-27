@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 1.3
+Version: 1.4
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -45,10 +45,14 @@ function build_post_list_item($post_id,$post_type,$is_child) {
 	$title = get_the_title($post_id);
 	$title = esc_html($title);
 
- /* Limit title length */
+ 	/* Limit title length */
 
 	if(strlen($title)>20) {
-		$title = substr($title, 0, 20) . '..';
+		if( function_exists( 'mb_substr' ) ) {
+			$title = mb_substr($title, 0, 20) . '..';
+		} else {
+			$title = substr($title, 0, 20) . '..';
+		}
 	}
 
 	$output = '<div class="';
@@ -180,6 +184,7 @@ function custom_post_list_view() {
 						. '<div class="post_list_view_headline">' . '<hr>' . '</div>';
 
 			$count=0;
+
 			foreach ($posts as $post) {
 				if(($max_limit==0) ||
 					($count<$max_limit))
@@ -199,7 +204,7 @@ function custom_post_list_view() {
 					if($post_type == 'attachment') {
 						 add_media_page("Title", $output, "edit_posts", $custom_menu_slug, "custom_post_list_view_page");
 					} else {
-						add_submenu_page(('edit.php?post_type=' . $post_type), "Title", $output, "edit_posts", '', "custom_post_list_view_page");
+						add_submenu_page(('edit.php?post_type=' . $post_type), "Title", $output, "edit_posts", $custom_menu_slug, "custom_post_list_view_page");
 					}
 				}
 			}
@@ -258,13 +263,9 @@ function ampl_register_settings() {
 	add_settings_field('ampl_settings_field_string', '<b>Select post types to enable</b>', 'ampl_settings_field_input', 'ampl_settings_section_page_name', 'ampl_settings_section');
 }
 
-function ampl_settings_section_page() {
-/*	echo '<p>Main description</p>';  */
-}
+function ampl_settings_section_page() { /*	Empty  */ }
 
 function ampl_settings_field_input() {
-//	$options = get_option('ampl_settings');
-//	echo "<input id='ampl_settings_field_string' name='ampl_settings[page]' type='checkbox' value='{$options['text_string']}' />";
 
 	$settings = get_option( 'ampl_settings');
 
@@ -362,15 +363,14 @@ function ampl_get_post_types() {
 }
 
 function ampl_settings_page() {
-?>
-<div class="wrap">
-<h2>Admin Menu Post List</h2>
-<form method="post" action="options.php">
-    <?php settings_fields( 'ampl_settings_field' ); ?>
-    <?php do_settings_sections( 'ampl_settings_section_page_name' ); ?>
-    <?php submit_button(); ?>
-</form>
-</div>
-<?php }
-
-?>
+	?>
+	<div class="wrap">
+	<h2>Admin Menu Post List</h2>
+	<form method="post" action="options.php">
+	    <?php settings_fields( 'ampl_settings_field' ); ?>
+	    <?php do_settings_sections( 'ampl_settings_section_page_name' ); ?>
+	    <?php submit_button(); ?>
+	</form>
+	</div>
+	<?php
+}
