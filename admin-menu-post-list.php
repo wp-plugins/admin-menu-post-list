@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 1.5
+Version: 1.6
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -33,7 +33,7 @@ function ampl_plugin_settings_link( $links, $file ) {
  */
 
 
-function ampl_build_post_list_item($post_id, $post_type, $is_child, $post_status = "any") {
+function ampl_build_post_list_item($post_id, $post_type, $is_child, $child_query) {
 
 	if( !isset($_GET['post']) )
 		$current_post_ID = -1;
@@ -56,7 +56,11 @@ function ampl_build_post_list_item($post_id, $post_type, $is_child, $post_status
 
 	$output = '<div class="';
 
-	if ($is_child != 'child') { $output .= 'post_list_view_indent'; }
+	if ($is_child != 'child') {
+		$output .= 'post_list_view_indent';
+	} else {
+		$output .= 'post_list_view_child';
+	}
 
 	if ($current_post_ID == ($post_id)) { $output .= ' post_current'; }
 
@@ -94,8 +98,10 @@ function ampl_build_post_list_item($post_id, $post_type, $is_child, $post_status
 	$children = get_posts(array(
         'post_parent' => $post_id,
         'post_type' => $post_type,
-		"orderby" => "menu_order",
-        'post_status' => $post_status,
+		"orderby" => $child_query['orderby'],
+		"order" => $child_query['order'],
+        'post_status' => $child_query['post_status'],
+        'posts_per_page'   => -1,
     ));
 
 	if($children) {
@@ -174,6 +180,12 @@ function custom_post_list_view() {
 			"suppress_filters" => 0
 		);
 
+		$child_query = array(
+			"orderby" => $post_orderby,
+			"order" => $post_order,
+			"post_status" => $post_exclude,
+			);
+
 		$posts = get_posts($args);
 
 		if($posts) {
@@ -188,7 +200,7 @@ function custom_post_list_view() {
 			foreach ($posts as $post) {
 				if(($max_limit==0) ||
 					($count<$max_limit))
-						$output .= ampl_build_post_list_item($post->ID, $post_type, 'parent', $post_exclude);
+						$output .= ampl_build_post_list_item($post->ID, $post_type, 'parent', $child_query);
 				$count++;
 			}
 
@@ -237,17 +249,22 @@ function custom_post_list_view_css() { ?>
 			line-height:1 !important;
 			padding:5px 0 !important;
 		}
+		.post_list_view .post_list_view_child a {
+			line-height:1.2 !important;
+			padding: 2px 0 !important;
+		}
     </style>
 
 <?php }
 add_action( 'admin_head', 'custom_post_list_view_css' );
 
 
-/**********
+
+/*========================================================================
  *
- * Add settings page
+ * Settings page
  *
- */
+ *=======================================================================*/
 
 // create custom plugin settings menu
 add_action('admin_menu', 'ampl_create_menu');
