@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 1.4
+Version: 1.5
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -33,8 +33,7 @@ function ampl_plugin_settings_link( $links, $file ) {
  */
 
 
-function build_post_list_item($post_id,$post_type,$is_child) {
-
+function ampl_build_post_list_item($post_id, $post_type, $is_child, $post_status = "any") {
 
 	if( !isset($_GET['post']) )
 		$current_post_ID = -1;
@@ -57,13 +56,13 @@ function build_post_list_item($post_id,$post_type,$is_child) {
 
 	$output = '<div class="';
 
-	if($is_child != 'child') { $output .= 'post_list_view_indent'; }
+	if ($is_child != 'child') { $output .= 'post_list_view_indent'; }
 
-	if($current_post_ID == ($post_id)) { $output .= ' post_current'; }
+	if ($current_post_ID == ($post_id)) { $output .= ' post_current'; }
 
 	$output .= '"><a href="' . $edit_link . '">';
 
-	if($is_child == 'child') { $output .= '&mdash; '; }
+	if ($is_child == 'child') { $output .= '&mdash; '; }
 
 	/* Display post status */
 
@@ -81,6 +80,7 @@ function build_post_list_item($post_id,$post_type,$is_child) {
 
 	if($current_post_ID == ($post_id))
 		$output .= '</b>';
+
 	switch(get_post_status($post_id)) {
 		case 'draft':
 		case 'pending':
@@ -95,12 +95,12 @@ function build_post_list_item($post_id,$post_type,$is_child) {
         'post_parent' => $post_id,
         'post_type' => $post_type,
 		"orderby" => "menu_order",
-        'post_status' => 'any',
+        'post_status' => $post_status,
     ));
 
 	if($children) {
 		foreach($children as $child) {
-			$output .= build_post_list_item($child->ID,$post_type,'child');
+			$output .= ampl_build_post_list_item($child->ID,$post_type,'child',$post_status);
 		}
 	}
 
@@ -188,7 +188,7 @@ function custom_post_list_view() {
 			foreach ($posts as $post) {
 				if(($max_limit==0) ||
 					($count<$max_limit))
-						$output .= build_post_list_item($post->ID,$post_type,'parent');
+						$output .= ampl_build_post_list_item($post->ID, $post_type, 'parent', $post_exclude);
 				$count++;
 			}
 

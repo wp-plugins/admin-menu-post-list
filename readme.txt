@@ -5,8 +5,8 @@ Author URI: eliotakira.com
 Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.6
-Tested up to: 3.8.1
-Stable tag: 1.4
+Tested up to: 3.9.2
+Stable tag: 1.5
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -65,6 +65,10 @@ Not yet.
 None.
 
 == Changelog ==
+
+= 1.5 =
+
+* Fix: Filter child posts by published status
 
 = 1.4 =
 
