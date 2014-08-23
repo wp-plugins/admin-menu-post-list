@@ -86,16 +86,16 @@ Not yet.
 = 1.6 =
 
 * Improve line-height
-* Fix: Get all child posts
+* Get all child posts
 
 = 1.5 =
 
-* Fix: Filter child posts by published status
+* Filter child posts by published status
 
 = 1.4 =
 
-* Fix: compatibility with multi-byte languages, i.e., Japanese
-* Fix: compatibility with WP Admin UI Customize
+* Compatibility with multi-byte languages, i.e., Japanese
+* Compatibility with WP Admin UI Customize
 
 Update courtesy of: gqevu6bsiz. Thank you!
 
