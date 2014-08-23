@@ -6,7 +6,7 @@ Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.6
 Tested up to: 3.9.2
-Stable tag: 1.6
+Stable tag: 1.8
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -39,14 +39,20 @@ And the direction of the order:
 
 By default, they are set to display from most recent to older posts.
 
-Also, you can choose to only display published posts, and exclude those with future, draft or pending status.
+Also, you can choose to display only published posts, and exclude those with future, draft or pending status.
+
+= Global settings =  
+<br />
+* *Limit title length* - trim the title by number of characters
+* *Child posts in dropdown* - put child posts in a dropdown list
+
+= Recommended =  
+<br />
+[Wider Admin Menu](http://wordpress.org/plugins/wider-admin-menu/)
 
 = Note =  
 <br />
 There is a plugin called [Intuitive Custom Post Order](http://wordpress.org/plugins/intuitive-custom-post-order/), which lets you order posts by drag and drop. If it's installed, it overrides the post order settings in the admin menu also.
-
-== Feature plan ==  
-<br>
 
 == Installation ==
 
@@ -62,9 +68,19 @@ Not yet.
 
 == Screenshots ==
 
-None.
+1. When menu is open
+
+2. Menu on hover
+
+3. Settings page
 
 == Changelog ==
+
+= 1.8 =
+
+* Organize code, improve style
+* Option to put child posts in a dropdown list
+* Show grandchildren with another indent
 
 = 1.6 =
 
