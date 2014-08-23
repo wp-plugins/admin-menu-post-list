@@ -13,7 +13,7 @@ Display a post list in the admin menu
 
 == Description ==
 
-Admin Menu Post List adds a simple post list in the admin menu for easy access. It supports posts, pages, and custom post types.
+**Admin Menu Post List** adds a simple post list in the admin menu for easy access. It supports posts, pages, and custom post types.
 
 In the normal admin menu, when you're editing a post and wish to go to another one, you have to click on All Posts, then select a post -- or have All Posts open on another browser tab. With the Admin Menu Post List, you can just select the next post to edit, direct from the menu.
 
