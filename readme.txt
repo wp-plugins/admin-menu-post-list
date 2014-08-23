@@ -68,11 +68,12 @@ Not yet.
 
 == Screenshots ==
 
-1. When menu is open
+1. Settings page
 
 2. Menu on hover
 
-3. Settings page
+3. When menu is open
+
 
 == Changelog ==
 
