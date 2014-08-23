@@ -41,8 +41,8 @@ By default, they are set to display from most recent to older posts.
 
 Also, you can choose to display only published posts, and exclude those with future, draft or pending status.
 
-= Global settings =  
-<br />
+Global settings:
+
 * *Limit title length* - trim the title by number of characters
 * *Child posts in dropdown* - put child posts in a dropdown list
 
