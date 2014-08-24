@@ -6,7 +6,7 @@ Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.6
 Tested up to: 3.9.2
-Stable tag: 1.8
+Stable tag: 1.9
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -77,9 +77,10 @@ Not yet.
 
 == Changelog ==
 
-= 1.8 =
+= 1.9 =
 
-* Organize code, improve style
+* Organize and clean up code
+* Improve style for post list and settings page
 * Option to put child posts in a dropdown list
 * Show grandchildren with another indent
 
