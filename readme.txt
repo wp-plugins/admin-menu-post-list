@@ -79,6 +79,7 @@ Not yet.
 
 = 2.0 =
 
+* Test compatibility with WP 4.0
 * Eliminate PHP notice
 
 = 1.9 =
