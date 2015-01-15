@@ -5,8 +5,8 @@ Author URI: eliotakira.com
 Plugin URI: wordpress.org/plugins/admin-menu-post-list/
 Tags: admin, menu, admin menu, post, page, custom post type, list, view
 Requires at least: 3.6
-Tested up to: 4.0
-Stable tag: 2.0
+Tested up to: 4.1
+Stable tag: 2.0.1
 License: GPLv2 or later
 
 Display a post list in the admin menu
@@ -77,6 +77,12 @@ Not yet.
 
 == Changelog ==
 
+= 2.0.1 =
+
+* Test compatibility with WP 4.1
+* Improve style for long title and dropdown
+* Display placeholder text when there's no title
+
 = 2.0 =
 
 * Test compatibility with WP 4.0
@@ -103,7 +109,7 @@ Not yet.
 * Compatibility with multi-byte languages, i.e., Japanese
 * Compatibility with WP Admin UI Customize
 
-Update courtesy of: gqevu6bsiz. Thank you!
+Update courtesy of gqevu6bsiz - thank you!
 
 = 1.3 =
 

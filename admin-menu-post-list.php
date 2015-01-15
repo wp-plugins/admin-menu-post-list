@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu Post List
 Plugin URI: http://wordpress.org/plugins/admin-menu-post-list/
 Description: Display a post list in the admin menu
-Version: 2.0
+Version: 2.0.1
 Author: Eliot Akira
 Author URI: eliotakira.com
 License: GPL2
@@ -26,16 +26,16 @@ class AdminMenuPostList {
 	function __construct() {
 
 		// Admin frontend
-		add_action('admin_menu', array($this,'add_post_list_view'), 11);
+		add_action( 'admin_menu', array($this,'add_post_list_view'), 11 );
 		add_action( 'admin_head', array($this,'post_list_css'));
-		add_action('admin_footer', array($this,'admin_footer_scripts'));
+		add_action( 'admin_footer', array($this,'admin_footer_scripts') );
 
 		// Admin backend
-		add_action( 'admin_init', array($this,'register_settings'));
-		add_action('admin_menu', array($this,'create_menu'));
-		add_filter( "plugin_action_links", array($this,'plugin_settings_link'), 10, 4 );
+		add_action( 'admin_init', array($this,'register_settings') );
+		add_action( 'admin_menu', array($this,'create_menu') );
+		add_filter( 'plugin_action_links', array($this,'plugin_settings_link'), 10, 4 );
 		// Remove "Settings saved" message on admin page
-		add_action( 'admin_notices', array($this, 'remove_settings_saved_notice'));
+		add_action( 'admin_notices', array($this, 'remove_settings_saved_notice') );
 		$this->saved_notice = false;
 	}
 	
@@ -75,6 +75,8 @@ class AdminMenuPostList {
 			}
 			if ($title != $orig_title) $title.='..';
 		}
+
+		if (rtrim($title) == '') $title = '(no title)';
 
 
 		$output = '<div class="';
@@ -332,65 +334,9 @@ class AdminMenuPostList {
 	 *=======================================================================*/
 
 	function post_list_css() {
-		?>
-		<style>
-			.post_list_view_headline {
-				padding-left: 10px !important; 
-				padding-right: 10px !important;
-				margin-top: -8px !important;
-			}
-			.post_list_view_headline hr {
-				border-color: #666 !important;
-			}
-			#adminmenu .wp-submenu .post_list_view a {
-				line-height: 1.3 !important;
-				padding: 0px 4px 4px 0 !important;
-			}
-			.post_list_view_indent {
-				margin-left: 12px;
-			}
-			.ampl-drop, .ampl-child-dash {
-				color: #666;
-			}
-			.ampl-child-dash {
-				float: left;
-				padding-right: 4px;
-			}
-			.ampl-drop {
-				display: inline;
-				font-size: 16px;
-				font-weight: bold;
-			}
-			.ampl-drop:hover {
-				color: #bbb;
-			}
-			.ampl-down {
-				display: none;
-			}
-			#adminmenu .ampl a {
-				display: inline-block;
-			}
-			#adminmenu a.ampl-empty {
-				padding: 0 !important;
-			}
-			.ampl-settings-page .ampl-border-top {
-				border-top: 1px solid #ccc;
-			}
-			.ampl-settings-page .ampl-border-bottom {
-				border-bottom: 1px solid #ccc;
-			}
-			.ampl-settings-page td {
-				width: 200px;
-			}
-			.ampl-settings-page .submit {
-				padding-left: 10px;
-			}
-			.ampl-settings-page .saved-notice {
-				padding-left: 20px;
-				margin-top: -15px;
-			}
-	    </style>
-		<?php
+
+		?><style><?php include('ampl.css');  ?></style><?php
+
 	}
 
 
